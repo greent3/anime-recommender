@@ -1,0 +1,51 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mysql"
+    url      = env("DATABASE_URL")
+}
+
+model User {
+    id        Int      @id @default(autoincrement())
+    username  String   @unique
+    email     String   @unique
+    createdAt DateTime @default(now())
+    reviews   Review[]
+    watchlist Series[]
+}
+
+model Category {
+    id     Int      @id @default(autoincrement())
+    title  String
+    series Series[]
+}
+
+model Series {
+    id          Int        @id @default(autoincrement())
+    title       String
+    bio         String?
+    score       Float?
+    type        filmType
+    episodes    Int?
+    airDate     String?
+    categories  Category[] // unable to use list of scalar (enum) values in mysql. will rely on zod schema for validation
+    reviews     Review[]
+    watchlister User[]
+}
+
+model Review {
+    id               Int    @id @default(autoincrement())
+    reviewer         User   @relation(fields: [reviewerId], references: [id])
+    reviewerId       Int
+    reviewedSeries   Series @relation(fields: [reviewedSeriesId], references: [id])
+    reviewedSeriesId Int
+    rating           Int? // integer enums uncompatable with prisma. will rely on zod schema for validation
+    potential        Int? // integer enums uncompatable with prisma. will rely on zod schema for validation
+}
+
+enum filmType {
+    TV
+    Movie
+}
