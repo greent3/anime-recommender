@@ -1,5 +1,5 @@
 # Anime recommender web app built with t3-turbo-repo
-Uses React, Next.js, trpc, tailwind CSS, and prisma
+Uses React, Next.js, trpc, tailwind CSS, and prisma  
 Video here: https://youtu.be/iYWTQAWePIM  
 
 ### Users can:
