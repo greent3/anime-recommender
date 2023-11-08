@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .themed-centered-box-fullwidth-fullheight {
+    @apply bg-lightPrimary dark:bg-darkPrimary dark:text-darkSecondary text-lightSecondary flex h-full w-full flex-row items-center justify-center;
+  }
+  .themed-centered-box {
+    @apply bg-lightPrimary dark:bg-darkPrimary dark:text-darkSecondary text-lightSecondary  flex flex-row items-center justify-center;
+  }
+  .themed-centered-stack-fullwidth-fullheight {
+    @apply bg-lightPrimary dark:bg-darkPrimary dark:text-darkSecondary text-lightSecondary  flex h-full w-full flex-col items-center justify-center;
+  }
+  .themed-centered-stack {
+    @apply bg-lightPrimary dark:bg-darkPrimary dark:text-darkSecondary text-lightSecondary  flex flex-col items-center justify-center;
+  }
+}

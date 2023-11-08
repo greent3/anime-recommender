@@ -24,26 +24,30 @@ const SignOut = () => {
 };
 
 const PostCard: React.FC<{
-  post: inferProcedureOutput<AppRouter["post"]["all"]>[number];
-}> = ({ post }) => {
+  series: inferProcedureOutput<AppRouter["series"]["all"]>[number];
+}> = ({ series }) => {
   return (
     <View className="rounded-lg border-2 border-gray-500 p-4">
-      <Text className="text-xl font-semibold text-[#cc66ff]">{post.title}</Text>
-      <Text className="text-white">{post.content}</Text>
+      <Text className="text-xl font-semibold text-[#cc66ff]">{series.title}</Text>
+      <Text className="text-white">{series.bio}</Text>
     </View>
   );
 };
 
 const CreatePost: React.FC = () => {
   const utils = trpc.useContext();
-  const { mutate } = trpc.post.create.useMutation({
+  const { mutate } = trpc.series.create.useMutation({
     async onSuccess() {
-      await utils.post.all.invalidate();
+      await utils.series.all.invalidate();
     },
   });
 
   const [title, onChangeTitle] = React.useState("");
-  const [content, onChangeContent] = React.useState("");
+  const [bio, onChangeBio] = React.useState("");
+  // const [type, onChangeType] = React.useState(filmType.TV);
+  const [score, onChangeScore] = React.useState<number | null>(null);
+  const [episodes, onChangeEpisodes] = React.useState(Number);
+  const [airDate, onChangeAirDate] = React.useState("");
 
   return (
     <View className="flex flex-col border-t-2 border-gray-500 p-4">
@@ -54,15 +58,19 @@ const CreatePost: React.FC = () => {
       />
       <TextInput
         className="mb-2 rounded border-2 border-gray-500 p-2 text-white"
-        onChangeText={onChangeContent}
+        onChangeText={onChangeBio}
         placeholder="Content"
       />
+
       <TouchableOpacity
         className="rounded bg-[#cc66ff] p-2"
         onPress={() => {
           mutate({
             title,
-            content,
+            // bio,
+            // airDate,
+            // type,
+            // episodes
           });
         }}
       >
@@ -73,7 +81,7 @@ const CreatePost: React.FC = () => {
 };
 
 export const HomeScreen = () => {
-  const postQuery = trpc.post.all.useQuery();
+  const seriesQuery = trpc.series.all.useQuery();
   const [showPost, setShowPost] = React.useState<string | null>(null);
 
   return (
@@ -97,17 +105,18 @@ export const HomeScreen = () => {
         </View>
 
         <FlashList
-          data={postQuery.data}
+          data={seriesQuery.data}
           estimatedItemSize={20}
           ItemSeparatorComponent={() => <View className="h-2" />}
           renderItem={(p) => (
             <TouchableOpacity onPress={() => setShowPost(p.item.id)}>
-              <PostCard post={p.item} />
+              <PostCard series={p.item} />
             </TouchableOpacity>
           )}
         />
 
         <CreatePost />
+        < SharedExample1 />
         <SignOut />
       </View>
     </SafeAreaView>
