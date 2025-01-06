@@ -23,17 +23,21 @@ model Category {
 }
 
 model Series {
-    id          Int        @id @default(autoincrement())
-    title       String
-    bio         String?    @db.VarChar(900)
-    score       Float?
-    type        filmType
-    episodes    Int?
-    airDate     String?
-    imgPath     String?
-    categories  Category[] // unable to use list of scalar (enum) values in mysql. will rely on zod schema for validation
-    reviews     Review[]
-    watchlister User[]
+    id            Int        @id @default(autoincrement())
+    title         String
+    japaneseTitle String?
+    rating        String?
+    bio           String?    @db.VarChar(2800)
+    score         Float?
+    type          filmType
+    episodes      Int?
+    startDate     String?
+    endDate       String?
+    imgPath       String?
+    trailerUrl    String?
+    categories    Category[] // unable to use list of scalar (enum) values in mysql. will rely on zod schema for validation
+    reviews       Review[]
+    watchlister   User[]
 }
 
 model Review {
@@ -50,4 +54,7 @@ model Review {
 enum filmType {
     TV
     Movie
+    Special
+    OVA
+    ONA
 }
