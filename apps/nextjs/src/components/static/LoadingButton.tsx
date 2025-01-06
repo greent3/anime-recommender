@@ -8,8 +8,6 @@ function LoadingButton() {
   const [darkTheme] = useDarkMode();
   const fullConfig = resolveConfig(tailwindConfig);
 
-  console.log("===================== fullconfig.theme", fullConfig.theme);
-
   return (
     <div className=" align-center flex  h-full w-full flex-row items-center justify-center ">
       <Oval

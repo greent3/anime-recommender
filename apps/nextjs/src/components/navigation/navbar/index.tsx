@@ -3,39 +3,42 @@ import Link from "next/link";
 import { UserButton } from "@clerk/nextjs";
 import { ThemeIcon } from "../../buttons/ToggleThemeSwitch";
 
-export const navTab = () => {
-
-}
+export const navTab = () => {};
 
 export const Navbar = () => {
-
   const pageNames = [
     {
-      name: 'Home', url: '/'
+      name: "Home",
+      url: "/",
     },
     {
-      name: 'Profile', url: '/profile'
+      name: "Profile",
+      url: "/profile",
     },
     {
-      name: 'Explore', url: '/explore'
+      name: "Explore",
+      url: "/explore",
     },
     {
-      name: 'Watchlist', url: '/watchlist'
-    }
-  ]
+      name: "Watchlist",
+      url: "/watchlist",
+    },
+  ];
 
   return (
     <>
-      <div className="w-full h-20 pt-2  bg-lightPrimary dark:bg-darkPrimary flex flex-row justify-center items-center">
+      <div className="bg-lightPrimary dark:bg-darkPrimary flex  h-20 w-full flex-row items-center justify-center pt-2">
         <div className="container mx-auto px-4 ">
-          <div className="flex justify-between items-center  ">
+          <div className="flex items-center justify-between  ">
             <ThemeIcon />
-            <ul className="hidden md:flex gap-x-20">
+            <ul className="hidden gap-x-20 md:flex">
               {pageNames.map((p, index) => (
                 <li key={`navtab-${index}`}>
-                  <Link href={p.url} className="group" >
-                    <p className=" text-lightSecondary dark:text-darkSecondary font-semibold text-2xl ">{p.name}</p>
-                    <div className=" w-full h-1 opacity-0 group-hover:opacity-100 bg-lightSecondary dark:bg-darkSecondary" />
+                  <Link href={p.url} className="group">
+                    <p className=" text-lightSecondary dark:text-darkSecondary text-2xl font-semibold ">
+                      {p.name}
+                    </p>
+                    <div className=" bg-lightSecondary dark:bg-darkSecondary h-1 w-full opacity-0 group-hover:opacity-100" />
                   </Link>
                 </li>
               ))}
