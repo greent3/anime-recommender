@@ -11,17 +11,17 @@ export default async function handler(
   if (req.method === "POST") {
     try {
       const event = req.body as WebhookEvent; // Extract `data` from the request body
+      const userJSON = event.data as UserJSON;
+      const { id } = userJSON;
 
       // Basic validation
-      if (!event || !event.data.id) {
+      if (!userJSON || !id) {
         return res.status(400).json({ error: "User data with id is required" });
       }
 
       if (event.type != "user.created") {
         return;
       }
-
-      const userJSON = event.data as UserJSON;
 
       // Run a Prisma transaction to ensure atomic operations
       await prisma.$transaction(async (tx) => {
@@ -34,11 +34,10 @@ export default async function handler(
 
         // If the user doesn't exist, create a new user and proceed
         if (!existingUser) {
-          const { id } = userJSON;
           const { username } = userJSON;
           const emailAddress = userJSON.email_addresses[0]?.email_address;
 
-          if (!id || !username || !emailAddress) {
+          if (!username || !emailAddress) {
             return res.status(400).json({
               error:
                 "Invalid webhook data. Id, Username, or Email not provided.",
