@@ -24,7 +24,6 @@
     "@trpc/next": "^10.1.0",
     "@trpc/react-query": "^10.1.0",
     "@trpc/server": "^10.1.0",
-    "daisyui": "^3.9.3",
     "flowbite": "^1.8.1",
     "flowbite-react": "^0.6.4",
     "next": "^13.1.6",
@@ -33,6 +32,7 @@
     "react-google-charts": "^4.0.1",
     "react-icons": "^4.11.0",
     "react-loader-spinner": "^5.4.5",
+    "react-youtube": "^10.1.0",
     "rippleui": "^1.12.1",
     "svix": "^1.13.0",
     "zod": "^3.18.0"

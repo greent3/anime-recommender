@@ -17,21 +17,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require("daisyui")],
-  // daisyui: {
-  //   themes: [
-  //     {
-  //       light: {
-  //         ...require("daisyui/src/colors/themes")["[data-theme=light]"],
-  //         primary: "#F47521",
-  //         secondary: "#808080",
-  //       },
-  //       dark: {
-  //         ...require("daisyui/src/colors/themes")["[data-theme=dark]"],
-  //         primary: "#272626",
-  //         secondary: "#F47521",
-  //       },
-  //     },
-  //   ],
-  // },
+  plugins: [],
 };
