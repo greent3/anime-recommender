@@ -14,6 +14,14 @@ const config = {
   eslint: {
     ignoreDuringBuilds: !!process.env.CI,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "cdn.myanimelist.net",
+      },
+    ],
+  },
 };
 
 export default config;
