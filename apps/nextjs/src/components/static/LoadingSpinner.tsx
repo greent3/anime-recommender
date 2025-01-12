@@ -4,7 +4,7 @@ import useDarkMode from "../../hooks/useDarkMode";
 import resolveConfig from "tailwindcss/resolveConfig";
 import tailwindConfig from "../../../tailwind.config.cjs";
 
-function LoadingButton() {
+function LoadingSpinner() {
   const [darkTheme] = useDarkMode();
   const fullConfig = resolveConfig(tailwindConfig);
 
@@ -32,4 +32,4 @@ function LoadingButton() {
   );
 }
 
-export default LoadingButton;
+export default LoadingSpinner;
