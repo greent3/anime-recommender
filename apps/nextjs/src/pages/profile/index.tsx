@@ -52,7 +52,7 @@ const Profile: NextPage = () => {
 
               <p className=" themed-centered-stack h-1/5 w-3/5   ">
                 {" "}
-                Go Review some animes and come back!
+                Go review some animes and come back!
               </p>
             </div>
           )}

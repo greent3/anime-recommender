@@ -48,7 +48,7 @@ function Explore() {
       </div>
       {allSeries.data && allSeries.data?.length == 0 ? (
         <div className=" flex w-full  flex-row items-center justify-center   ">
-          <p className=" text-2xl font-bold">No animes homie</p>
+          <p className=" text-2xl font-bold">Error loading anime data</p>
         </div>
       ) : (
         <div className=" h-5/6 w-full items-center justify-center">
