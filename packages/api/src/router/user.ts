@@ -25,10 +25,18 @@ export const userRouter = router({
         where: {
           id: ctx.auth.userId,
         },
-        include: {
+        select: {
           watchlist: {
             include: {
               categories: true,
+              reviews: {
+                where: {
+                  reviewerId: ctx.auth.userId,
+                },
+                select: {
+                  rating: true,
+                },
+              },
             },
           },
         },
