@@ -12,7 +12,7 @@ import GenericSeriesTable from "../../components/GenericSeriesTable";
 
 const Profile: NextPage = () => {
   const fullConfig = resolveConfig(tailwindConfig);
-  const chartFontColor = fullConfig.theme?.colors["darkSecondary"] || "#F47521";
+  const chartFontColor = "#F47521";
   const profileStats = trpc.review.getStats.useQuery("1");
   const allSeries = trpc.series.getAllPositiveReviewedSeries.useQuery();
 
