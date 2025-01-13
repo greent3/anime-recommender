@@ -74,7 +74,26 @@ async function main() {
   });
 
   // seed cleaned rows into db
-  arrayOfRowsToAddToDb.map(async (record: CreateSeriesInput) => {
+  // arrayOfRowsToAddToDb.map(async (record: CreateSeriesInput) => {
+  // await prisma.series.create({
+  //   data: {
+  //     title: record.title || record.japaneseTitle || "",
+  //     japaneseTitle: record.japaneseTitle,
+  //     type: record.type,
+  //     score: record.score,
+  //     episodes: record.episodes,
+  //     startDate: record.startDate,
+  //     endDate: record.endDate,
+  //     rating: record.rating,
+  //     bio: record.bio,
+  //     categories: {
+  //       connect: record.categoryIds || [],
+  //     },
+  //     imgPath: record.imgPath,
+  //     trailerUrl: record.trailerUrl ? parseVideoId(record.trailerUrl) : null,
+  //   },
+  // });
+  for (const record of arrayOfRowsToAddToDb) {
     await prisma.series.create({
       data: {
         title: record.title || record.japaneseTitle || "",
@@ -93,7 +112,8 @@ async function main() {
         trailerUrl: record.trailerUrl ? parseVideoId(record.trailerUrl) : null,
       },
     });
-  });
+  }
+  // });
 }
 
 main()
