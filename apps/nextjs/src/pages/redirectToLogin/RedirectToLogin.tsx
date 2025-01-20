@@ -42,19 +42,18 @@ function RedirectToLogin() {
             </h2>
             <div className="flex flex-col items-center gap-4">
               <p className="text-center text-white">
-                <span className="font-bold">Email:</span> grunkypeep2@gmail.com
+                <span className="font-bold">Email:</span> 1234testuser1234
               </p>
               <p className="text-center text-white">
-                <span className="font-bold">Password:</span>{" "}
-                grunkypeep2@gmail.com
+                <span className="font-bold">Password:</span> 1234testuser1234
               </p>
             </div>
             <div className="mt-6 flex justify-center">
               <button
                 className="rounded-lg bg-gray-600 px-4 py-2 text-white hover:bg-gray-800"
                 onClick={() => {
-                  navigator.clipboard.writeText("grunkypeep2@gmail.com");
-                  alert("Email copied to clipboard!");
+                  navigator.clipboard.writeText("1234testuser1234");
+                  alert("Username/password copied to clipboard!");
                 }}
               >
                 Copy Email
