@@ -13,7 +13,7 @@ import GenericSeriesTable from "../../components/GenericSeriesTable";
 const Profile: NextPage = () => {
   const fullConfig = resolveConfig(tailwindConfig);
   const chartFontColor = "#F47521";
-  const profileStats = trpc.review.getStats.useQuery("1");
+  const profileStats = trpc.review.getStats.useQuery();
   const allSeries = trpc.series.getAllPositiveReviewedSeries.useQuery();
 
   if (profileStats.isFetching) {
@@ -24,18 +24,20 @@ const Profile: NextPage = () => {
     );
   } else {
     return (
-      <div className=" themed-centered-stack-fullwidth-fullheight pt-12">
+      <div className=" themed-centered-stack-fullwidth-fullheight flex pt-12">
         <PageTitle title={"My Profile"} />
         <>
           {profileStats.data ? (
-            <div className=" flex h-full w-full flex-row  gap-16">
+            <div className=" flex h-full w-full flex-row    ">
               <PieChart
                 likedCategoryData={profileStats.data}
                 fontColor={chartFontColor}
               />
 
-              <div className=" themed-centered-stack  h-full w-3/5  pb-16  ">
-                <p className=" text-2xl font-bold">My Liked Animes</p>
+              <div className=" themed-centered-stack  flex h-full  w-3/5   pt-10 ">
+                <p className=" flex w-full justify-center text-center text-2xl font-bold">
+                  My Liked Animes
+                </p>
                 <GenericSeriesTable
                   seriesList={allSeries.data}
                   page={"Profile"}
