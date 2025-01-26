@@ -38,7 +38,7 @@ export const reviewRouter = router({
       return null;
     }),
 
-  getStats: protectedProcedure.input(z.string()).query(async ({ ctx }) => {
+  getStats: protectedProcedure.query(async ({ ctx }) => {
     if (ctx.auth.userId) {
       const categoryCount = await getCategoryCount(ctx.auth.userId, ctx.prisma);
       if (categoryCount) {
