@@ -1,16 +1,15 @@
-import React from 'react'
-
+import React from "react";
 
 interface PageTitleProps {
-    title: string
+  title: string;
 }
 
 function PageTitle({ title }: PageTitleProps) {
-    return (
-        <div className=' themed-centered-box  h-28 w-auto  p-3 ' >
-            <p className=" font-semibold text-5xl">{title}</p>
-        </div>
-    )
+  return (
+    <div className=" flex w-full justify-center  text-center">
+      <p className=" text-5xl font-semibold">{title}</p>
+    </div>
+  );
 }
 
-export default PageTitle
+export default PageTitle;
