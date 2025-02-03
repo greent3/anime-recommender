@@ -32,5 +32,9 @@
     "patchedDependencies": {
       "react-native@0.70.5": "patches/react-native@0.70.5.patch"
     }
-  }
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
 }
