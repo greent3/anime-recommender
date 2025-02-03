@@ -5,7 +5,7 @@ export const userRouter = router({
   create: protectedProcedure
     .input(
       z.object({
-        username: z.string(),
+        username: z.string().optional(),
         email: z.string(),
       }),
     )
@@ -13,7 +13,7 @@ export const userRouter = router({
       return ctx.prisma.user.create({
         data: {
           id: ctx.auth.userId,
-          username: input.username,
+          username: input.username || null,
           email: input.email,
         },
       });

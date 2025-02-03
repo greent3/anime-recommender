@@ -9,7 +9,7 @@ datasource db {
 
 model User {
     id        String   @id
-    username  String   @unique
+    username  String?  @unique
     email     String   @unique
     createdAt DateTime @default(now())
     reviews   Review[]
