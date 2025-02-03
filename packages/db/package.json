@@ -11,6 +11,8 @@
     "db-push": "pnpm with-env prisma db push --force-reset",
     "db-generate": "pnpm with-env prisma generate",
     "db-resetlocal": "pnpm prisma db reset",
+    "db-migrate": "pnpm with-env prisma migrate dev --name init",
+    "db-migrate-prod": "pnpm with-env prisma migrate deploy",
     "db-seed": "npx tsx prisma/seed/seed.ts"
   },
   "dependencies": {

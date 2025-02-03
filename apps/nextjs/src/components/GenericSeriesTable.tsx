@@ -30,11 +30,20 @@ function GenericSeriesTable({ seriesList, page }: GenericSeriesTableProps) {
       },
     },
   );
+  const addToWatchlistMutation = trpc.user.addToWatchlist.useMutation({
+    onSuccess: () => {
+      utils.user.getUsersWatchlist.invalidate();
+    },
+  });
 
   console.log("------ series list", seriesList);
 
   async function removefromWatchlist(seriesId: number) {
     await removeFromWatchlistMutation.mutateAsync(seriesId);
+  }
+
+  async function addToWatchlist(seriesId: number) {
+    await addToWatchlistMutation.mutateAsync(seriesId);
   }
   return (
     <div className=" w-full flex-1 items-center justify-center px-8 ">
@@ -57,7 +66,7 @@ function GenericSeriesTable({ seriesList, page }: GenericSeriesTableProps) {
               <tr
                 key={`row-${ind}-${series.title}`}
                 className={clsx(
-                  " items-center justify-center ",
+                  " items-center justify-center  align-middle ",
                   ind != seriesList.length - 1 && "border-b border-gray-300",
                 )}
               >
@@ -81,9 +90,18 @@ function GenericSeriesTable({ seriesList, page }: GenericSeriesTableProps) {
                       Remove
                     </button>
                   </td>
-                ) : (
+                ) : series.reviews?.[0]?.rating ? (
                   <td>
                     {convertRatingToString(series.reviews?.[0]?.rating || 0)}
+                  </td>
+                ) : (
+                  <td className=" h-full w-full flex-row items-center justify-center align-middle">
+                    <button
+                      className=" dark:bg-darkSecondary bg-lightSecondary dark:text-darkPrimary text-lightPrimary dark:hover:text-darkTertiary hover:bg-lightTertiary items-center justify-center rounded-lg  p-2 "
+                      onClick={() => addToWatchlist(series.id)}
+                    >
+                      Add to Watchlist
+                    </button>
                   </td>
                 )}
               </tr>

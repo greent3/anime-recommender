@@ -34,10 +34,10 @@ export default async function handler(
 
         // If the user doesn't exist, create a new user and proceed
         if (!existingUser) {
-          const { username } = userJSON;
+          const { username } = userJSON || null;
           const emailAddress = userJSON.email_addresses[0]?.email_address;
 
-          if (!username || !emailAddress) {
+          if (!emailAddress) {
             return res.status(400).json({
               error:
                 "Invalid webhook data. Id, Username, or Email not provided.",
