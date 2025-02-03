@@ -3,8 +3,6 @@ import Link from "next/link";
 import { UserButton } from "@clerk/nextjs";
 import { ThemeIcon } from "../../buttons/ToggleThemeSwitch";
 
-export const navTab = () => {};
-
 export const Navbar = () => {
   const pageNames = [
     {
