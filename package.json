@@ -9,6 +9,8 @@
     "db-generate": "turbo db-generate",
     "db-push": "turbo db-push",
     "db-seed": "turbo db-seed",
+    "db-migrate": "turbo db-migrate --force",
+    "db-migrate-prod": "turbo db-migrate-prod --force",
     "dev": "turbo dev --parallel",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "lint": "turbo lint",
