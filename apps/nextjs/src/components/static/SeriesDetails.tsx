@@ -7,14 +7,14 @@ import { SeriesText } from "../SeriesText";
 
 interface SeriesDetailsProps {
   title: string;
-  bio?: string | undefined | null;
-  type?: string | undefined | null;
-  episodes?: number | undefined | null;
-  aired?: string | undefined | null;
-  imgPath?: string | undefined | null;
-  score?: string | undefined | null;
-  categories?: Category[] | undefined;
-  trailerUrl?: string | undefined | null;
+  bio?: string | null;
+  type?: string | null;
+  episodes?: number | null;
+  aired?: string | null;
+  imgPath?: string | null;
+  score?: string | null;
+  categories?: Category[];
+  trailerUrl?: string | null;
 }
 
 export function SeriesDetails({
@@ -28,19 +28,11 @@ export function SeriesDetails({
   categories,
   trailerUrl,
 }: SeriesDetailsProps) {
-  let catString = "";
   const [showTrailerModal, setShowTrailerModal] = useState(false);
-  categories?.map((cat, index) => {
-    if (index >= 1 && index < categories?.length) {
-      catString = catString.concat(", ", cat.title);
-    } else {
-      catString = catString.concat(cat.title);
-    }
-  });
+  const catString = categories?.map((cat) => cat.title).join(", ") || "Unknown";
 
-  // const openTrailerModal = () => {};
   return (
-    <div className=" themed-centered-stack-fullwidth-fullheight  gap-10  px-32 ">
+    <div className="flex h-full w-3/4 flex-col items-center gap-10  px-32">
       {showTrailerModal && (
         <DescriptionModal
           isOpen={showTrailerModal}
@@ -49,32 +41,38 @@ export function SeriesDetails({
           videoUrl={trailerUrl || null}
         />
       )}
+
       <PageTitle title={title} />
-      <div className="themed-centered-box-fullwidth-fullheight gap-10">
-        <div className=" themed-centered-box-fullwidth-fullheight   ">
-          <div className="themed-centered-box  relative h-3/4  w-3/4 ">
-            <Image
-              src={imgPath || "/general.jpeg"}
-              alt="There was supposed to be a really cool image here :/"
-              fill={true}
-            />
-          </div>
+
+      <div className="flex w-full   items-center gap-10 ">
+        <div className="relative h-96 w-64">
+          <Image
+            src={imgPath || "/general.jpeg"}
+            alt="There was supposed to be a really cool image here :/"
+            layout="fill"
+            objectFit="cover"
+            className="rounded-lg shadow-lg"
+          />
         </div>
-        <div className=" flex h-full w-full  flex-col justify-between ">
+
+        <div className="flex w-full flex-col justify-between space-y-3">
           <SeriesText label="Type" text={type} />
-          <SeriesText label="Score" text={score + " / 10"} />
-          <div
-            className=" dark:hover:bg-darkSecondary dark:hover:text-darkPrimary hover:bg-lightSecondary hover:text-lightPrimary rounded-lg"
+          <SeriesText label="Score" text={`${score} / 10`} />
+
+          <button
+            className="hover:bg-lightSecondary hover:text-lightPrimary dark:hover:bg-darkSecondary dark:hover:text-darkPrimary rounded-lg p-2 transition-all"
             onClick={() => setShowTrailerModal(true)}
           >
             <SeriesText label="Bio" text={bio} />
-          </div>
-          {type == "TV" && (
+          </button>
+
+          {type === "TV" && (
             <SeriesText
               label="Episodes"
               text={episodes ? String(episodes) : "Unknown"}
             />
           )}
+
           <SeriesText label="Aired" text={aired} />
           <SeriesText label="Categories" text={catString} />
         </div>

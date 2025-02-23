@@ -10,10 +10,17 @@ export function SeriesText({ label, text }: SeriesTextProps) {
         label == "Bio" ? " h-2/6" : "h-1/6"
       } `}
     >
-      <div className=" pr-2 text-2xl font-semibold">{label + ":"}</div>
+      <div className=" justify-start pr-2 text-2xl font-semibold">
+        {label + ":"}
+      </div>
       {text ? (
-        <div className="  text-lightTertiary dark:text-darkTertiary">
-          {text.length < 300 ? text : text.slice(0, 297) + "..."}
+        <div className="  text-lightTertiary dark:text-darkTertiary  text-left">
+          <text>
+            {text.length < 300 ? text : text.slice(0, 277) + "... "}
+            <text className=" dark:text-darkSecondary text-lightSecondary  ">
+              {text.length > 300 && " click to read more"}
+            </text>
+          </text>
         </div>
       ) : (
         <div>{"Unknown"}</div>

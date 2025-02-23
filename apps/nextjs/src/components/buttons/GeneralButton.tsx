@@ -1,23 +1,30 @@
-import React from 'react'
+import React from "react";
 
 interface GeneralButtonProps {
-    text?: string
-    emoji?: any
-    bgColor?: string
-    textColor?: string
-    handleClick: (e: React.MouseEvent<HTMLButtonElement>, value?: number) => void
+  text?: string;
+  emoji?: React.ReactNode;
+  bgColor?: string;
+  textColor?: string;
+  handleClick: (e: React.MouseEvent<HTMLButtonElement>, value?: number) => void;
 }
 
-function GeneralButton({ text, emoji, bgColor, textColor, handleClick }: GeneralButtonProps) {
-    return (
-        <button className={`w-48  h-1/2 flex flex-row justify-center items-center rounded-3xl p-2 gap-2 font-semibold text-lg ${bgColor ? bgColor : ' bg-lightSecondary dark:bg-darkSecondary'} ${textColor ? textColor : ' dark:text-darkPrimary text-lightPrimary'}`} onClick={handleClick} >
-            <span className=' h-full flex flex-row items-center justify-center '>
-                <p>{emoji}</p></span>
-            <div className={` h-full flex flex-row justify-center items-center `}>
-                <p >{text}</p>
-            </div>
-        </button>
-    )
+function GeneralButton({
+  text,
+  emoji,
+  bgColor = "bg-lightSecondary dark:bg-darkSecondary",
+  textColor = "text-lightPrimary dark:text-darkPrimary",
+  handleClick,
+}: GeneralButtonProps) {
+  return (
+    <button
+      type="button"
+      className={`flex h-12 w-48 items-center justify-center gap-2 rounded-3xl p-2 text-sm font-semibold transition-all md:text-lg ${bgColor} ${textColor}`}
+      onClick={handleClick}
+    >
+      {emoji && <span>{emoji}</span>}
+      {text && <p>{text}</p>}
+    </button>
+  );
 }
 
-export default GeneralButton
+export default GeneralButton;

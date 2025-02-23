@@ -5,63 +5,53 @@ import { trpc } from "../../utils/trpc";
 import PageTitle from "../../components/static/PageTitle";
 import Image from "next/image";
 import PieChart from "../../components/data/pieChart/PieChart";
-import resolveConfig from "tailwindcss/resolveConfig";
-import tailwindConfig from "../../../tailwind.config.cjs";
 import LoadingSpinner from "../../components/static/LoadingSpinner";
 import GenericSeriesTable from "../../components/GenericSeriesTable";
 
 const Profile: NextPage = () => {
-  const fullConfig = resolveConfig(tailwindConfig);
   const chartFontColor = "#F47521";
   const profileStats = trpc.review.getStats.useQuery();
   const allSeries = trpc.series.getAllPositiveReviewedSeries.useQuery();
 
   if (profileStats.isFetching) {
     return (
-      <div className=" themed-centered-stack-fullwidth-fullheight ">
+      <div className="flex h-full items-center justify-center">
         <LoadingSpinner />
       </div>
     );
-  } else {
-    return (
-      <div className=" themed-centered-stack-fullwidth-fullheight flex pt-12">
-        <PageTitle title={"My Profile"} />
-        <>
-          {profileStats.data ? (
-            <div className=" flex h-full w-full flex-row    ">
-              <PieChart
-                likedCategoryData={profileStats.data}
-                fontColor={chartFontColor}
-              />
-
-              <div className=" themed-centered-stack  flex h-full  w-3/5   pt-10 ">
-                <p className=" flex w-full justify-center text-center text-2xl font-bold">
-                  My Liked Animes
-                </p>
-                <GenericSeriesTable
-                  seriesList={allSeries.data}
-                  page={"Profile"}
-                />
-              </div>
-            </div>
-          ) : (
-            <div className=" dark:text-darkSecondary text-lightSecondary  flex   h-full flex-col items-center pt-28 text-3xl">
-              <p className=" themed-centered-stack  h-1/5 w-3/5   ">
-                {" "}
-                {"No Liked Animes?!?! "}
-              </p>
-              <Image src={"/sad2.png"} alt="" width={300} height={100} />
-
-              <p className=" themed-centered-stack h-1/5 w-3/5   ">
-                {" "}
-                Go review some animes and come back!
-              </p>
-            </div>
-          )}
-        </>
-      </div>
-    );
   }
+
+  return (
+    <div className="flex h-full flex-col items-center pt-12">
+      <PageTitle title="My Profile" />
+
+      {profileStats.data ? (
+        <div className="flex w-full  gap-6">
+          <div className=" flex w-2/5">
+            <PieChart
+              likedCategoryData={profileStats.data}
+              fontColor={chartFontColor}
+            />
+          </div>
+
+          <div className="flex w-3/5 flex-col items-center pt-10">
+            <p className="text-center text-2xl font-bold">My Liked Animes</p>
+            <GenericSeriesTable seriesList={allSeries.data} page="Profile" />
+          </div>
+        </div>
+      ) : (
+        <div className="dark:text-darkSecondary text-lightSecondary flex flex-col items-center pt-28 text-3xl">
+          <p className="text-center text-2xl font-semibold">
+            No Liked Animes?!?!
+          </p>
+          <Image src="/sad2.png" alt="Sad face" width={300} height={100} />
+          <p className="text-center text-lg">
+            Go review some animes and come back!
+          </p>
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default Profile;

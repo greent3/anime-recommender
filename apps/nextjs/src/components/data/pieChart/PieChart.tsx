@@ -22,13 +22,13 @@ function PieChart({ likedCategoryData, fontColor }: PieChartProps) {
   };
 
   return (
-    <div className=" themed-centered-box h-full w-2/5   ">
+    <div className="h-full w-full ">
       <Chart
         chartType="PieChart"
         data={likedCategoryData}
         options={options}
         width={"100%"}
-        height={"700px"}
+        height={"100%"}
       />
     </div>
   );

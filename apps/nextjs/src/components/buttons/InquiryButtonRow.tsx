@@ -11,9 +11,9 @@ function InquiryButtonRow({
   goToWatchlist,
 }: InquiryButtonRowProps) {
   return (
-    <div className=" flex h-1/5 min-h-20  w-full flex-row items-center justify-center  gap-72 ">
+    <div className="flex h-20 w-full items-center justify-center gap-16 md:gap-72">
       <GeneralButton
-        text={`Haven't seen it`}
+        text="Haven't seen it"
         emoji="❌"
         handleClick={goToWatchlist}
       />

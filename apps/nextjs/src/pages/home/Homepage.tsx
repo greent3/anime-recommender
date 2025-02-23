@@ -16,22 +16,12 @@ function Homepage() {
 
   const [buttonsToShow, setButtonsToShow] = useState<PageString>("inquiry");
 
-  function goToInquiry() {
-    setButtonsToShow("inquiry");
-  }
-  function goToRating() {
-    setButtonsToShow("rating");
-  }
-  function goToWatchlist() {
-    setButtonsToShow("addAction");
-  }
-
   return (
-    <div className=" themed-centered-stack-fullwidth-fullheight pt-12">
+    <div className="flex h-full w-full flex-col items-center  pt-12">
       {exampleSeries.isFetching ? (
         <LoadingSpinner />
       ) : exampleSeries.data ? (
-        <>
+        <div className="flex w-full flex-col items-center gap-6">
           <SeriesDetails
             title={exampleSeries.data.title || "Unknown Title"}
             type={exampleSeries.data.type}
@@ -44,25 +34,25 @@ function Homepage() {
             trailerUrl={exampleSeries.data.trailerUrl}
           />
 
-          {buttonsToShow == "inquiry" && (
+          {buttonsToShow === "inquiry" && (
             <InquiryButtonRow
-              goToRating={goToRating}
-              goToWatchlist={goToWatchlist}
+              goToRating={() => setButtonsToShow("rating")}
+              goToWatchlist={() => setButtonsToShow("addAction")}
             />
           )}
-          {buttonsToShow == "addAction" && (
+          {buttonsToShow === "addAction" && (
             <AddToWatchlistButtonRow
-              goToInquiry={goToInquiry}
+              goToInquiry={() => setButtonsToShow("inquiry")}
               seriesId={exampleSeries.data.id}
             />
           )}
-          {buttonsToShow == "rating" && (
+          {buttonsToShow === "rating" && (
             <RatingButtonRow
-              goToInquiry={goToInquiry}
+              goToInquiry={() => setButtonsToShow("inquiry")}
               seriesId={exampleSeries.data.id}
             />
           )}
-        </>
+        </div>
       ) : (
         <LoadingError />
       )}
