@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { convertCategoryToString } from "../utilFunctions/convertCategoryToString";
-import { convertRatingToString } from "../utilFunctions/convertRatingToString";
+import { convertRatingToEmote } from "../utilFunctions/convertRatingToEmote";
 import { Category, Series } from "@acme/db";
 import LoadingSpinner from "./static/LoadingSpinner";
 import { trpc } from "../utils/trpc";
@@ -22,6 +22,18 @@ interface GenericSeriesTableProps {
 
 function GenericSeriesTable({ seriesList, page }: GenericSeriesTableProps) {
   const utils = trpc.useUtils();
+  const { data } = trpc.user.getUsersWatchlist.useQuery();
+
+  const inWatchlist = (currentAnimeId: number) => {
+    const animeIds = data?.watchlist.map((anime) => {
+      return anime.id;
+    });
+
+    if (animeIds?.includes(currentAnimeId)) {
+      return true;
+    }
+    return false;
+  };
 
   const removeFromWatchlistMutation = trpc.user.removeFromWatchlist.useMutation(
     {
@@ -35,8 +47,6 @@ function GenericSeriesTable({ seriesList, page }: GenericSeriesTableProps) {
       utils.user.getUsersWatchlist.invalidate();
     },
   });
-
-  console.log("------ series list", seriesList);
 
   async function removefromWatchlist(seriesId: number) {
     await removeFromWatchlistMutation.mutateAsync(seriesId);
@@ -73,9 +83,10 @@ function GenericSeriesTable({ seriesList, page }: GenericSeriesTableProps) {
                 <td>
                   <Image
                     src={series.imgPath || "/general.jpeg"}
-                    alt="Anime Picture"
-                    width={60}
+                    alt="Anime Photo"
                     height={50}
+                    width={70}
+                    className=" min-h-20 min-w-16   rounded-xl"
                   />
                 </td>
                 <td>{series.title}</td>
@@ -91,8 +102,12 @@ function GenericSeriesTable({ seriesList, page }: GenericSeriesTableProps) {
                     </button>
                   </td>
                 ) : series.reviews?.[0]?.rating ? (
-                  <td>
-                    {convertRatingToString(series.reviews?.[0]?.rating || 0)}
+                  <td className=" text-3xl">
+                    {convertRatingToEmote(series.reviews?.[0]?.rating || 0)}
+                  </td>
+                ) : inWatchlist(series.id) ? (
+                  <td className=" text-center">
+                    <text>{"Not yet reviewed"}</text>
                   </td>
                 ) : (
                   <td className=" h-full w-full flex-row items-center justify-center align-middle">
