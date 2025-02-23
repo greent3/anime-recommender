@@ -102,7 +102,7 @@ function GenericSeriesTable({ seriesList, page }: GenericSeriesTableProps) {
                     </button>
                   </td>
                 ) : series.reviews?.[0]?.rating ? (
-                  <td className=" text-3xl">
+                  <td className=" text-center text-3xl">
                     {convertRatingToEmote(series.reviews?.[0]?.rating || 0)}
                   </td>
                 ) : inWatchlist(series.id) ? (
