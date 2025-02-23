@@ -7,55 +7,53 @@ import getAllPositiveReviewedSeries from "../utilFunctions/getAllPositiveReviewe
 import hasNoCommonGenres from "../utilFunctions/hasNoCommonGenres";
 import { subtractArray } from "../utilFunctions/subtractArray";
 
-// pull the "mapping array to IDs" thing into its own util function?
-
 export const seriesRouter = router({
-  all: protectedProcedure.input(z.string()).mutation(async ({ ctx, input }) => {
-    if (ctx.auth.userId) {
-      if (input === "") {
-        return await ctx.prisma.series.findMany({
-          include: {
-            categories: true,
-            reviews: {
-              where: {
-                reviewerId: ctx.auth.userId,
-              },
-              select: {
-                rating: true,
-              },
-            },
-          },
-          orderBy: {
-            title: "asc",
-          },
-        });
-      } else {
-        return await ctx.prisma.series.findMany({
-          where: {
-            title: {
-              contains: input,
-            },
-          },
-          include: {
-            categories: true,
-            reviews: {
-              where: {
-                reviewerId: ctx.auth.userId,
-              },
-              select: {
-                rating: true,
-              },
-            },
-          },
-          orderBy: {
-            title: "asc",
-          },
-        });
+  getInfinite: protectedProcedure
+    .input(
+      z.object({
+        text: z.string().optional(),
+        cursor: z.number().optional(),
+        limit: z.number().default(10),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      if (!ctx.auth.userId) {
+        return { items: [], nextCursor: null };
       }
-    } else {
-      return null;
-    }
-  }),
+
+      const { text, cursor, limit } = input;
+
+      const series = await ctx.prisma.series.findMany({
+        take: limit + 1,
+        cursor: cursor ? { id: cursor } : undefined,
+        where: text
+          ? {
+              title: {
+                contains: text,
+              },
+            }
+          : {},
+        include: {
+          categories: true,
+          reviews: {
+            where: {
+              reviewerId: ctx.auth.userId,
+            },
+            select: {
+              rating: true,
+            },
+          },
+        },
+        orderBy: { title: "asc" },
+      });
+
+      const nextCursor = series.length > limit ? series.pop()?.id : null;
+
+      return {
+        items: series,
+        nextCursor,
+      };
+    }),
 
   byId: protectedProcedure.input(z.number()).query(async ({ ctx, input }) => {
     return await ctx.prisma.series.findFirst({
